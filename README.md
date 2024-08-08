@@ -50,25 +50,45 @@ The Auction app is a single-page full stack web application for clients and admi
 
 ## Core User Stories
 
-As a USER I can create an account
+- As a USER I can create an account
+	- Decription: User can create an account with usernamme and password.
+ 	- Expected Result: New User is created
 
-As a USER I can login/logout
+- As a USER I can login/logout
+	- Decription: User can login using password and logout when done with app.
+ 	- Expected Result: User is validated on correct login
 
-As a USER I can delete my account
+- As a USER I can delete my account
+	- Decription: User can delete account from database
+ 	- Expected Result: Account is deleted
 
-As a USER I can create an item
+- As a USER I can create an item
+	- Decription: User and can create an item to be auctioned off user cannot approve said item
+ 	- Expected Result: User adds a valid item into the database to be approved for auction
 
-As a USER I can bid on an item
+- As a USER I can bid on an item
+	- Decription: User can specify a bid for a specific item in the database
+ 	- Expected Result: The item recieves a bid tied to a specific user
 
-As a USER I can leave a comment under an item
+- As a USER I can leave a comment under an item
+	- Decription: The user can leave a comment under an item
+ 	- Expected Result: The item now has a comment associated with it tied a specific user
 
-As an ADMIN I can manage user accounts
+- As an ADMIN I can manage user accounts
+	- Decription: Admin can view all accounts and items and messages associated with accounts
+ 	- Expected Result: A list of user accounts
 
-As an ADMIN I can approve the items
+- As an ADMIN I can approve the items
+	- Decription: An admin can change an items approval status to true
+ 	- Expected Result: An item now has approved set to true
 
-As an ADMIN I can edit items
+- As an ADMIN I can edit items
+	- Decription: An admin can edit Items that were not posted by themselves
+ 	- Expected Result: Edits made to any specified item
 
-As an ADMIN I can detele comments
+- As an ADMIN I can detele comments
+	- Decription: Admin can delete comments that are associated with a specific item
+ 	- Expected Result: Comments with Id that are associated with Item are deleted
 
 ## Stretch Goals
 
