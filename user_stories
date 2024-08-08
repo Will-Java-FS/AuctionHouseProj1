@@ -1,0 +1,10 @@
+As a USER I can create an account
+As a USER I can login/logout
+As a USER I can delete my account
+As a USER I can create an item
+As a USER I can bid on an item
+As a USER I can leave a comment under an item
+As an ADMIN I can manage user accounts
+As an ADMIN I can approve the items
+As an ADMIN I can edit items
+As an ADMIN I can detele comments
