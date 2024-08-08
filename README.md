@@ -15,13 +15,14 @@ The Auction app is a single-page full stack web application for clients and admi
   - Spring Boot Starter Actuator
 - **Java 17**
 - **PostgreSQL**
+- **Git**
 
 ### Table Setup
 
 - **User**
 	- user_id
 	- username
-  - userImage
+  	- userImage
 	- password
 	- isAdmin?
 	
@@ -33,9 +34,9 @@ The Auction app is a single-page full stack web application for clients and admi
 	- timestamp
  
 - **Item**
-	- item_id
-	- user_owner
-	- isApproved?
+  - item_id
+  - user_owner
+  - isApproved?
   - itemImage
   - itemName
   - itemDescription
@@ -44,7 +45,7 @@ The Auction app is a single-page full stack web application for clients and admi
 	- comment_id
 	- user_commenter
 	- item_commentOn
-  - message
+	- message
 	- timestamp
 
 ## Core User Stories
