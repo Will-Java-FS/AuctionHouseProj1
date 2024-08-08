@@ -1,5 +1,5 @@
 # Project 1: Auction House Management App
-#Group Members
+**Group Members**:
 Emmett, Daniel, Ryan, Alex
 
 ## Project Overview
