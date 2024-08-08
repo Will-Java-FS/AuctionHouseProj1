@@ -7,7 +7,7 @@ Emmett, Daniel, Ryan, Alex
 Auction Management App
 The Auction app is a single-page full stack web application for clients and admins. In addition to registering and signing in, Users can list items for auction, bid on auctions and leave comments on auctioned items. Admins can approve items for auction or manage user accounts. They can also adjust the active status and remaining time on any said auctions.
 
-### Technologies Used
+## Technologies Used
 
 - **Spring Boot 3.3.2**
   - Spring Boot Starter Web
@@ -17,7 +17,7 @@ The Auction app is a single-page full stack web application for clients and admi
 - **PostgreSQL**
 - **Git**
 
-### Table Setup
+## Table Setup
 
 - **User**
 	- user_id
