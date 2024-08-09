@@ -3,6 +3,7 @@ import Home from './pages/home/Home';
 import Auction from './pages/auction/Auction';
 import Account from './pages/account/Account';
 import NotFound from './pages/notfound/NotFound';
+import Login from './pages/login/Login';
 
 function AppRouter() {
     return (
@@ -11,6 +12,7 @@ function AppRouter() {
           <Route path="/" element={<Home />} />
           <Route path="/auction" element={<Auction />} />
           <Route path="/account" element={<Account />} />
+          <Route path="/login" element={<Login />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

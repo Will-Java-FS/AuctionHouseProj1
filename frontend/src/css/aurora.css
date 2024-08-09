@@ -1,0 +1,55 @@
+:root {
+    /* Light Theme Colors */
+    --aurora-primary-light: #FF6600; /* Bright Orange */
+    --aurora-secondary-light: #FF9933; /* Light Orange */
+    --aurora-background-light: #FFF5E6; /* Light Peach */
+  }
+  
+  .dark {
+    /* Dark Theme Colors */
+    --aurora-primary-dark: #CC5200; /* Darker Orange */
+    --aurora-secondary-dark: #994C00; /* Even Darker Orange */
+    --aurora-background-dark: #333333; /* Dark Gray */
+  }
+  
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .aurora-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--aurora-primary-light), var(--aurora-secondary-light));
+    background-size: 300% 300%;
+    animation: auroraAnimation 10s ease infinite;
+  }
+
+.dark .aurora-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--aurora-primary-dark), var(--aurora-secondary-dark));
+    background-size: 300% 300%;
+    animation: auroraAnimation 10s ease infinite;
+  }
+  
+  @keyframes auroraAnimation {
+    0% {
+      background-position: 0% 0%;
+    }
+    50% {
+      background-position: 100% 100%;
+    }
+    100% {
+      background-position: 0% 0%;
+    }
+  }
+  
