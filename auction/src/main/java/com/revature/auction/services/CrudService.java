@@ -6,7 +6,7 @@ public interface CrudService<T>
 {
     List<T> getAll();
     T findById(int id);
-    T update(int id);
+    T update(int id, T object);
     T add(T object);
     int delete(int id);
 }

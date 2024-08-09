@@ -15,25 +15,23 @@ import java.util.Objects;
 public class Bid
 {
     @Id
-    @Column(name="bid_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bid_id;
-
-    // FK
-    private int user_bidder;
-
-    // FK
-    private int item_bidfor;
 
     @Getter
     @Setter
     private Timestamp bidtime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @Getter
+    @Setter
+    private int amount;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_bidder")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "item_bidfor")
     private Item item;
 
     @Override
@@ -42,12 +40,12 @@ public class Bid
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Bid bid = (Bid) o;
-        return getBid_id() == bid.getBid_id() && getUser_bidder() == bid.getUser_bidder() && getItem_bidfor() == bid.getItem_bidfor() && Objects.equals(getBidtime(), bid.getBidtime()) && Objects.equals(getUser(), bid.getUser()) && Objects.equals(getItem(), bid.getItem());
+        return getBid_id() == bid.getBid_id() && Objects.equals(getBidtime(), bid.getBidtime()) && Objects.equals(getUser(), bid.getUser()) && Objects.equals(getItem(), bid.getItem());
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hash(getBid_id(), getUser_bidder(), getItem_bidfor(), getBidtime(), getUser(), getItem());
+        return Objects.hash(getBid_id(), getBidtime(), getUser(), getItem());
     }
 }

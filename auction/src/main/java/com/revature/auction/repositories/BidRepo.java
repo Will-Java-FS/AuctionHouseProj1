@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BidRepo extends JpaRepository<Integer, Bid>
+public interface BidRepo extends JpaRepository<Bid, Integer>
 {
 
 }
