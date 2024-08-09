@@ -7,5 +7,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BidRepo extends JpaRepository<Integer, Bid>
 {
+    @Query("Select Items.* from Items Right Join Bids On Items.item_id = Bids.item_bidOn Where Bids.bid_id = ?1")
+    Bid findItemByBidId(int id);
 
+    @Query("Select Users.* from Users Right Join Bids On Users.user_id = Bids.user_bidder Where Bids.bid_id = ?1")
+    User findBidderByBidId(int id);
 }
