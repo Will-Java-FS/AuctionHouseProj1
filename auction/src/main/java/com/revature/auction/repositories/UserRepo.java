@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserRepo extends JpaRepository< User, Integer> {
+public interface UserRepo extends JpaRepository<User, Integer> {
 
-//    List<User> findByUsername(String un);
+        User findByUsernameAndPassword(String un, String pw);
 //
 //    @Query("Select Items.* from Users Left Join Items On Users.user_id = Items.user_owner Where Users.user_id = ?1")
 //    List<Item> findItemsByUserId(int id);
