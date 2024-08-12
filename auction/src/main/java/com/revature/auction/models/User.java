@@ -4,11 +4,13 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     @Getter
     @Id //makes this a primary key
@@ -28,12 +30,12 @@ public class User {
 
     @Getter
     @Setter
-    @Column(name = "isAdmin")
+    @Column(name = "isadmin")
     private boolean isAdmin = false;
 
     @Getter
     @Setter
-    @Column(name = "userImage")
+    @Column(name = "userimage")
     private String userImage;
 
 

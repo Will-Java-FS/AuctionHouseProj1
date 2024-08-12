@@ -1,6 +1,6 @@
 package com.revature.auction.controllers;
 
-import com.revature.auction.services.CommentService;
+import com.revature.auction.services.CommentServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/comment")
 public class CommentController
 {
-    public CommentService commentService;
+    public CommentServiceImp commentService;
 
     @Autowired
-    public CommentController(CommentService commentService)
+    public CommentController(CommentServiceImp commentService)
     {
         this.commentService = commentService;
     }

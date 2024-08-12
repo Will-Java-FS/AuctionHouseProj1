@@ -23,30 +23,51 @@ public class BidServiceImp implements BidService, CrudService<Bid>
     @Override
     public List<Bid> getAll()
     {
-        return List.of();
+        // Returning the list of all
+        return bidRepo.findAll();
     }
 
     @Override
     public Bid findById(int id)
     {
-        return null;
+        // Returning either an object or nothing based on whether or not it was found
+        return bidRepo.findById(id).orElse(null);
     }
 
     @Override
-    public Bid update(int id)
+    public Bid update(int id, Bid bid)
     {
-        return null;
+        // Validating object exists
+        Bid objectExists = bidRepo.findById(id).orElse(null);
+
+        if(objectExists != null)
+        {
+            // Saving the updates
+            bid.setBid_id(objectExists.getBid_id());
+            return bidRepo.save(bid);
+        }
+
+        return null; // Nothing was found so return null
     }
 
     @Override
     public Bid add(Bid object)
     {
-        return null;
+        // Adding an object to the database
+        return bidRepo.save(object);
     }
 
     @Override
     public int delete(int id)
     {
-        return 0;
+        Bid bid = bidRepo.findById(id).orElse(null);
+
+        if(bid != null)
+        {
+            bidRepo.deleteById(id);
+            return 1; // success
+        }
+
+        return 0; // failure
     }
 }

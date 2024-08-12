@@ -15,24 +15,19 @@ import java.util.Objects;
 public class Comment
 {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int comment_id;
-
-    // FK
-    private int user_commenter;
-
-    // FK
-    private int item_commenton;
 
     @Getter
     @Setter
     private Timestamp commenttime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="user_commenter")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="item_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="item_commenton")
     private Item item;
 
     @Override
@@ -41,12 +36,12 @@ public class Comment
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment = (Comment) o;
-        return getComment_id() == comment.getComment_id() && getUser_commenter() == comment.getUser_commenter() && getItem_commenton() == comment.getItem_commenton() && Objects.equals(getCommenttime(), comment.getCommenttime()) && Objects.equals(getUser(), comment.getUser()) && Objects.equals(getItem(), comment.getItem());
+        return getComment_id() == comment.getComment_id() && Objects.equals(getCommenttime(), comment.getCommenttime()) && Objects.equals(getUser(), comment.getUser()) && Objects.equals(getItem(), comment.getItem());
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hash(getComment_id(), getUser_commenter(), getItem_commenton(), getCommenttime(), getUser(), getItem());
+        return Objects.hash(getComment_id(), getCommenttime(), getUser(), getItem());
     }
 }
