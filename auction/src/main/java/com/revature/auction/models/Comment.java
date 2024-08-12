@@ -49,4 +49,7 @@ public class Comment
     {
         return Objects.hash(getComment_id(), getUser_commenter(), getItem_commenton(), getCommenttime(), getUser(), getItem());
     }
+
+
+
 }
