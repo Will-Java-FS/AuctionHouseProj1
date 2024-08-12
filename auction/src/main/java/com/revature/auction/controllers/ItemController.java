@@ -1,6 +1,6 @@
 package com.revature.auction.controllers;
 
-import com.revature.auction.services.ItemService;
+import com.revature.auction.services.ItemServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/item")
 public class ItemController
 {
-    public ItemService itemService;
+    public ItemServiceImp itemService;
 
     @Autowired
-    public ItemController(ItemService itemService)
+    public ItemController(ItemServiceImp itemService)
     {
         this.itemService = itemService;
     }

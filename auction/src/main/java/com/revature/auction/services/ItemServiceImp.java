@@ -23,7 +23,7 @@ public class ItemServiceImp implements ItemService, CrudService<Item>
     }
 
     @Override
-    public Item update(int id)
+    public Item update(int id, Item item)
     {
         return null;
     }

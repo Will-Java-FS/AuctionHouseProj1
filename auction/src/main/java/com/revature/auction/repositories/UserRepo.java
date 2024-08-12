@@ -1,6 +1,7 @@
-package com.revature.repositories;
+package com.revature.auction.repositories;
 
-import com.revature.models.*;
+import com.revature.auction.models.*;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -8,9 +9,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+
 public interface UserRepo extends JpaRepository< User, Integer> {
 
-    List<User> findByUsername(String un);
+    User findByUsernameAndPassword(String un, String pw);
 
     @Query("Select Items.* from Users Left Join Items On Users.user_id = Items.user_owner Where Users.user_id = ?1")
     List<Item> findItemsByUserId(int id);

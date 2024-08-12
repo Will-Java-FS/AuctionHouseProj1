@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BidRepo extends JpaRepository<Integer, Bid>
+public interface BidRepo extends JpaRepository<Bid, Integer>
 {
     @Query("Select Items.* from Items Right Join Bids On Items.item_id = Bids.item_bidOn Where Bids.bid_id = ?1")
     Bid findItemByBidId(int id);

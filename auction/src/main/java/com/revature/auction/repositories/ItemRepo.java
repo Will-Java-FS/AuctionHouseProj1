@@ -1,6 +1,6 @@
-package com.revature.repositories;
+package com.revature.auction.repositories;
 
-import com.revature.models.*;
+import com.revature.auction.models.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -20,6 +20,7 @@ public interface ItemRepo extends JpaRepository< Item, Integer> {
 
     @Query("Select Comments.* from Items Left Join Comments On Items.item_id = Comments.item_commentOn Where Item.item_id = ?1")
     List<Comment> findCommentsByItemId(int id);
+
 }
 
 /*

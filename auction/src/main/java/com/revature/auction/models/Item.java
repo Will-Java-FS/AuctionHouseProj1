@@ -3,11 +3,13 @@ package com.revature.auction.models;
 import java.util.Objects;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Table(name = "Items")
+@Table(name = "items")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Item {
     @Getter
     @Id //makes this a primary key
@@ -23,23 +25,23 @@ public class Item {
 
     @Getter
     @Setter
-    @Column(name = "itemName",nullable = false,unique = true)
+    @Column(name = "itemname",nullable = false,unique = true)
     private String itemName;
 
 
     @Getter
     @Setter
-    @Column(name = "itemDescription")
+    @Column(name = "itemdescription")
     private String itemDescription;
 
     @Getter
     @Setter
-    @Column(name = "itemImage")
+    @Column(name = "itemimage")
     private String itemImage;
 
     @Getter
     @Setter
-    @Column(name = "isApproved")
+    @Column(name = "isapproved")
     private boolean isApproved = false;
 
 

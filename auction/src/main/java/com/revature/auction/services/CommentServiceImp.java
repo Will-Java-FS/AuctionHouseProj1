@@ -24,7 +24,7 @@ public class CommentServiceImp implements CommentService, CrudService<Comment>
     }
 
     @Override
-    public Comment update(int id)
+    public Comment update(int id, Comment comment)
     {
         return null;
     }
