@@ -10,16 +10,17 @@ import java.util.List;
 @Repository
 public interface ItemRepo extends JpaRepository< Item, Integer> {
 
-//    List<Item> findByItemName(String in);
-//
-//    @Query("Select Users.* from Users Right Join Items On Users.user_id = Items.user_owner Where Items.item_id = ?1")
-//    User findOwnerByItemId(int id);
-//
-//    @Query("Select Bid.* from Items Left Join Bids On Items.item_id = Bids.user_bidOn Where Items.item_id = ?1")
-//    List<Bid> findBidsByItemId(int id);
-//
-//    @Query("Select Comments.* from Items Left Join Comments On Items.item_id = Comments.item_commentOn Where Item.item_id = ?1")
-//    List<Comment> findCommentsByItemId(int id);
+    List<Item> findByItemName(String in);
+
+    @Query("Select Users.* from Users Right Join Items On Users.user_id = Items.user_owner Where Items.item_id = ?1")
+    User findOwnerByItemId(int id);
+
+    @Query("Select Bid.* from Items Left Join Bids On Items.item_id = Bids.user_bidOn Where Items.item_id = ?1")
+    List<Bid> findBidsByItemId(int id);
+
+    @Query("Select Comments.* from Items Left Join Comments On Items.item_id = Comments.item_commentOn Where Item.item_id = ?1")
+    List<Comment> findCommentsByItemId(int id);
+
 }
 
 /*

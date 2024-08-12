@@ -1,6 +1,7 @@
 package com.revature.auction.repositories;
 
 import com.revature.auction.models.*;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -8,18 +9,19 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserRepo extends JpaRepository<User, Integer> {
 
-        User findByUsernameAndPassword(String un, String pw);
-//
-//    @Query("Select Items.* from Users Left Join Items On Users.user_id = Items.user_owner Where Users.user_id = ?1")
-//    List<Item> findItemsByUserId(int id);
-//
-//    @Query("Select Bid.* from Users Left Join Bids On Users.user_id = Bids.user_bidder Where Users.user_id = ?1")
-//    List<Bid> findBidsByUserId(int id);
-//
-//    @Query("Select Comments.* from Users Left Join Comments On Users.user_id = Comments.user_commenter Where Users.user_id = ?1")
-//    List<Comment> findCommentsByUserId(int id);
+public interface UserRepo extends JpaRepository< User, Integer> {
+
+    User findByUsernameAndPassword(String un, String pw);
+
+    @Query("Select Items.* from Users Left Join Items On Users.user_id = Items.user_owner Where Users.user_id = ?1")
+    List<Item> findItemsByUserId(int id);
+
+    @Query("Select Bid.* from Users Left Join Bids On Users.user_id = Bids.user_bidder Where Users.user_id = ?1")
+    List<Bid> findBidsByUserId(int id);
+
+    @Query("Select Comments.* from Users Left Join Comments On Users.user_id = Comments.user_commenter Where Users.user_id = ?1")
+    List<Comment> findCommentsByUserId(int id);
 }
 
 
