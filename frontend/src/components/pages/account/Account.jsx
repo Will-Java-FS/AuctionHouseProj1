@@ -8,9 +8,17 @@ import { Input } from "@nextui-org/react";
 function Account() {
   const FALL_BACK_IMAGE = process.env.REACT_APP_FALL_BACK_IMAGE;
   const FALL_BACK_USER = process.env.REACT_APP_FALL_BACK_USER;
+  const FALL_BACK_PASSWORD = process.env.REACT_APP_FALL_BACK_PASSWORD;
+
+  const user = {
+    username: FALL_BACK_USER,
+    password: FALL_BACK_PASSWORD,
+    image: FALL_BACK_IMAGE
+  }
 
   return (
     <div className="App flex justify-center">
+      <div className="aurora-background"></div>
       <div className="flex flex-col items-center m-10">
         <Image
           isBlurred
@@ -31,7 +39,7 @@ function Account() {
       </div>
       <div className="flex flex-col items-center m-10 w-full max-w-md">
         <h2 className="text-4xl font-semibold mb-10">
-          Hello, {FALL_BACK_USER}
+          Hello, {user.username}
         </h2>
         <Input size="lg" type="text" label="Username" placeholder="Enter your username" className="mb-5 w-full" />
         <Input size="lg" type="password" label="Password" placeholder="Enter your password" className="mb-5 w-full" />
