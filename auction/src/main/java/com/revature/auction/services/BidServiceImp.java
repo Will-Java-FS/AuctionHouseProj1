@@ -1,6 +1,8 @@
 package com.revature.auction.services;
 
 import com.revature.auction.models.Bid;
+import com.revature.auction.models.User;
+import com.revature.auction.models.Item;
 import com.revature.auction.repositories.BidRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,4 +72,15 @@ public class BidServiceImp implements BidService, CrudService<Bid>
 
         return 0; // failure
     }
+
+    public User getUser(int id)
+    {
+        return bidRepo.findBidderByBidId(id);
+    }
+
+    public Item getItem(int id)
+    {
+        return bidRepo.findItemByBidId(id);
+    }
+
 }

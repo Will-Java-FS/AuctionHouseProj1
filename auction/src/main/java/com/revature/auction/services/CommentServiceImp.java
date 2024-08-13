@@ -1,6 +1,8 @@
 package com.revature.auction.services;
 
 import com.revature.auction.models.Comment;
+import com.revature.auction.models.Item;
+import com.revature.auction.models.User;
 import com.revature.auction.repositories.BidRepo;
 import com.revature.auction.repositories.CommentRepo;
 import jakarta.transaction.Transactional;
@@ -68,5 +70,15 @@ public class CommentServiceImp implements CommentService, CrudService<Comment>
         }
 
         return 0; // no such comment
+    }
+
+    public User getUser(int id)
+    {
+        return commentRepo.findCommenterByCommentId(id);
+    }
+
+    public Item getItem(int id)
+    {
+        return commentRepo.findItemByCommentId(id);
     }
 }

@@ -14,14 +14,14 @@ public interface UserRepo extends JpaRepository< User, Integer> {
 
     User findByUsernameAndPassword(String un, String pw);
 
-//    @Query("Select Items.* from Users Left Join Items On Users.user_id = Items.user_owner Where Users.user_id = ?1")
-//    List<Item> findItemsByUserId(int id);
-//
-//    @Query("Select Bid.* from Users Left Join Bids On Users.user_id = Bids.user_bidder Where Users.user_id = ?1")
-//    List<Bid> findBidsByUserId(int id);
-//
-//    @Query("Select Comments.* from Users Left Join Comments On Users.user_id = Comments.user_commenter Where Users.user_id = ?1")
-//    List<Comment> findCommentsByUserId(int id);
+    @Query(value = "Select Items.* from Users Left Join Items On Users.user_id = Items.user_owner Where Users.user_id = ?1", nativeQuery = true)
+    List<Item> findItemsByUserId(int id);
+
+      @Query(value = "Select Bid.* from Users Left Join Bids On Users.user_id = Bids.user_bidder Where Users.user_id = ?1", nativeQuery = true)
+      List<Bid> findBidsByUserId(int id);
+
+    @Query(value = "Select Comments.* from Users Left Join Comments On Users.user_id = Comments.user_commenter Where Users.user_id = ?1", nativeQuery = true)
+    List<Comment> findCommentsByUserId(int id);
 }
 
 
