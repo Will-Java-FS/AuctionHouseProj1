@@ -33,4 +33,26 @@ public class UserServiceImp implements UserService
     {
         return userRepo.save(user);
     }
+
+    @Override
+    public User findUser(int id)
+    {
+        return userRepo.findById(id).orElse(null);
+    }
+
+    @Override
+    public User updateUser(int id, User user)
+    {
+        // Validating object exists
+        User objectExists = userRepo.findById(id).orElse(null);
+
+        if(objectExists != null)
+        {
+            // Saving the updates
+            user.setUser_id(objectExists.getUser_id());
+            return userRepo.save(user);
+        }
+
+        return null; // Nothing was found so return null
+    }
 }
