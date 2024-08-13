@@ -4,7 +4,9 @@ import com.revature.auction.models.User;
 
 public interface UserService
 {
-    User login(String username, String password);
-    void deleteAccount(int id);
-    User createAccount(User user);
+    public User login(String username, String password);
+    public void deleteAccount(int id);
+    public User createAccount(User user);
+    public User findUser(int id);
+    public User updateUser(int id, User user);
 }

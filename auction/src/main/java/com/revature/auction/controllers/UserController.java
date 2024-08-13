@@ -46,4 +46,23 @@ public class UserController
 
         return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
     }
+
+    @GetMapping("/{id}")
+    public User findUserById(@PathVariable int id)
+    {
+        return userService.findUser(id);
+    }
+
+    @PatchMapping("/{id}")
+    public User updateUser(@PathVariable int id, @RequestBody User user)
+    {
+        return userService.updateUser(id, user);
+    }
+
+    @GetMapping("/admin/{id}")
+    public boolean userIsAdmin(@PathVariable int id) //Lock behind key? Find out later
+    {
+        return userService.findUser(id).isAdmin();
+    }
+
 }
