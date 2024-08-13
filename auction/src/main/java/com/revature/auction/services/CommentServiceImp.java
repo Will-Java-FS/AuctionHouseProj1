@@ -22,6 +22,7 @@ public class CommentServiceImp implements CommentService, CrudService<Comment>
         this.commentRepo = commentRepo;
     }
 
+
     @Override
     public List<Comment> getAll()
     {
@@ -35,7 +36,7 @@ public class CommentServiceImp implements CommentService, CrudService<Comment>
     }
 
     @Override
-    public Comment update(int id, Comment comment)
+    public Comment update(int id, Comment object)
     {
         return null;
     }
