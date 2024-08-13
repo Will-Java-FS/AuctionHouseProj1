@@ -26,30 +26,47 @@ public class CommentServiceImp implements CommentService, CrudService<Comment>
     @Override
     public List<Comment> getAll()
     {
-        return List.of();
+        return commentRepo.findAll();
     }
 
     @Override
     public Comment findById(int id)
     {
-        return null;
+        return commentRepo.findById(id).orElse(null);
     }
 
     @Override
     public Comment update(int id, Comment object)
     {
+        Comment comment = commentRepo.findById(id).orElse(null);
+
+        // valid id
+        if(comment != null)
+        {
+            commentRepo.save(object);
+            return object;
+        }
+
         return null;
     }
 
     @Override
     public Comment add(Comment object)
     {
-        return null;
+        return commentRepo.save(object);
     }
 
     @Override
     public int delete(int id)
     {
-        return 0;
+        Comment comment = commentRepo.findById(id).orElse(null);
+
+        if(comment != null)
+        {
+            commentRepo.deleteById(id);
+            return 1; // deletion occurred
+        }
+
+        return 0; // no such comment
     }
 }

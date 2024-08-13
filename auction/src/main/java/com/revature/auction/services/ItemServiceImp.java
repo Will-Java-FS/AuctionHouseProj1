@@ -1,7 +1,9 @@
 package com.revature.auction.services;
 
 import com.revature.auction.models.Item;
+import com.revature.auction.repositories.ItemRepo;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,33 +12,56 @@ import java.util.List;
 @Transactional
 public class ItemServiceImp implements ItemService, CrudService<Item>
 {
+    ItemRepo itemRepo;
+
+    @Autowired
+    public ItemServiceImp(ItemRepo itemRepo)
+    {
+        this.itemRepo = itemRepo;
+    }
+
     @Override
     public List<Item> getAll()
     {
-        return List.of();
+        return itemRepo.findAll();
     }
 
     @Override
     public Item findById(int id)
     {
-        return null;
+        return itemRepo.findById(id).orElse(null);
     }
 
     @Override
     public Item update(int id, Item item)
     {
+        Item existingItem = itemRepo.findById(id).orElse(null);
+
+        if(existingItem != null)
+        {
+            return itemRepo.save(item);
+        }
+
         return null;
     }
 
     @Override
     public Item add(Item object)
     {
-        return null;
+        return itemRepo.save(object);
     }
 
     @Override
     public int delete(int id)
     {
+        Item item = itemRepo.findById(id).orElse(null);
+
+        if(item != null)
+        {
+            itemRepo.deleteById(id);
+            return 1; // Successful deletion
+        }
+
         return 0;
     }
 }
