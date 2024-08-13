@@ -1,9 +1,10 @@
 import {Card, CardBody, Image, Button} from "@nextui-org/react";
 import { EyeIcon } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
 function Home() {
 
-  const content = [
+  const items = [
     {
       itemId: 1,
       userOwner: "User",
@@ -46,7 +47,7 @@ function Home() {
     }
   ];
 
-  console.log(content[0].itemImage)
+  console.log(items[0].itemImage)
 
   return (
     <>
@@ -55,7 +56,7 @@ function Home() {
       </div>
 
       <div className="flex flex-col items-center space-y-6">
-        {content.map((item) => (
+        {items.map((item) => (
           <Card
             key={item.itemId}
             isBlurred
@@ -77,9 +78,10 @@ function Home() {
                 </div>
                 <div className="ml-6 flex flex-col">
                 <div className="flex w-full mb-2 space-x-5 items-center">
-                  <Button className="w-1/2" color="success">Place Bid</Button>
-                  <Button className="w-1/4" color="primary">View Item <EyeIcon className="w-5 h-5 ml-2" /></Button>
-                  <p className="w-1/4 text-left">Current Bid: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(item.bidAmount)}</p>
+                  <Button className="w-1/3" color="success">Place Bid</Button>
+                  
+                  <Button as={Link} to={`/item/${item.itemId}`} className="w-1/3" color="primary">View Item <EyeIcon className="w-5 h-5 ml-2" /></Button>
+                  <p className="w-1/3 text-left">Current Bid: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(item.bidAmount)}</p>
                 </div>
                 <h2 className="text-3xl my-3">{item.itemName}</h2>
                 <p className="text-l">{item.itemDescription}</p>
