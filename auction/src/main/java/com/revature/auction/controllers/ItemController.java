@@ -1,6 +1,6 @@
 package com.revature.auction.controllers;
 
-import com.revature.auction.models.Item;
+import com.revature.auction.models.*;
 import com.revature.auction.services.ItemServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,6 +50,25 @@ public class ItemController
     {
         itemService.delete(id);
         return null;
+    }
+
+
+    @GetMapping("/user/{item_id}")
+    public User getUser(@PathVariable int item_id)
+    {
+        return itemService.getUser(item_id);
+    }
+
+    @GetMapping("/bids/{item_id}")
+    public List<Bid> getBids(@PathVariable int item_id)
+    {
+        return itemService.getBids(item_id);
+    }
+
+    @GetMapping("/comments/{item_id}")
+    public List<Comment> getComments(@PathVariable int item_id)
+    {
+        return itemService.getComments(item_id);
     }
 
 }

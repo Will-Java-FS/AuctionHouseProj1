@@ -1,6 +1,8 @@
 package com.revature.auction.controllers;
 
 import com.revature.auction.models.Comment;
+import com.revature.auction.models.Item;
+import com.revature.auction.models.User;
 import com.revature.auction.services.CommentService;
 import com.revature.auction.services.CommentServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +76,18 @@ public class CommentController
     {
         commentService.delete(id);
         return HttpStatus.OK;
+    }
+
+    @GetMapping("/user/{comment_id}")
+    public User getUser(@PathVariable int comment_id)
+    {
+        return commentService.getUser(comment_id);
+    }
+
+    @GetMapping("/item/{comment_id}")
+    public Item getItem(@PathVariable int comment_id)
+    {
+        return commentService.getItem(comment_id);
     }
 
 }
