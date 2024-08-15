@@ -1,6 +1,6 @@
 package com.revature.auction.services;
 
-import com.revature.auction.models.Item;
+import com.revature.auction.models.*;
 import com.revature.auction.repositories.ItemRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,4 +64,18 @@ public class ItemServiceImp implements ItemService, CrudService<Item>
 
         return 0;
     }
+
+    public User getUser(int id)
+    {
+        return itemRepo.findOwnerByItemId(id);
+    }
+    public List<Comment> getComments(int id)
+    {
+        return itemRepo.findCommentsByItemId(id);
+    }
+    public List<Bid> getBids(int id)
+    {
+        return itemRepo.findBidsByItemId(id);
+    }
+
 }
