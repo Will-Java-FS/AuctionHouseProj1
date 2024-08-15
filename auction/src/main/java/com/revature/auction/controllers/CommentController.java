@@ -79,15 +79,22 @@ public class CommentController
     }
 
     @GetMapping("/user/{comment_id}")
-    public User getUser(@PathVariable int comment_id)
+    public ResponseEntity<User> getUser(@PathVariable int comment_id)
     {
-        return commentService.getUser(comment_id);
+        User ans = commentService.getUser(comment_id);
+        if(ans != null)
+        {
+            return new ResponseEntity<User>(ans, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/item/{comment_id}")
-    public Item getItem(@PathVariable int comment_id)
+    public ResponseEntity<Item> getItem(@PathVariable int comment_id)
     {
-        return commentService.getItem(comment_id);
+        Item ans = commentService.getItem(comment_id);
+        HttpStatus status = ans != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<Item>(ans, status);
     }
 
 }
