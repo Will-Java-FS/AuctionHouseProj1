@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Tabs, Tab, Input, Link, Button, Card, CardBody, CardHeader } from "@nextui-org/react";
+import axios from 'axios';
+import { Router, useNavigate } from 'react-router-dom';
 
 function Login() {
 
@@ -13,6 +15,29 @@ function Login() {
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
+
+  const navigate = useNavigate();
+
+  const login = () => {
+    // Define the URL of your API endpoint
+    const url = 'http://localhost:8080/user/login';
+    
+
+
+    // Make a POST request
+    axios.post(url, {username: username, password: password}, {
+      headers: {
+        'Content-Type': 'application/json', // Set content type to JSON
+        // Add any other headers if needed, e.g., Authorization
+      }
+    })
+    .then((res) => {
+      // Store the response body in local storage
+      localStorage.setItem('token', JSON.stringify(res.data));
+
+      navigate('/');
+    })
+  };
 
   return (
     <>
@@ -53,7 +78,7 @@ function Login() {
                       </Link>
                     </p>
                     <div className="flex gap-2 justify-end">
-                      <Button type="submit" className="button-text" fullWidth color="primary">
+                      <Button onClick={login} className="button-text" fullWidth color="primary">
                         Login
                       </Button>
                     </div>
