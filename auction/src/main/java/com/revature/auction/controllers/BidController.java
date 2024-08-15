@@ -1,6 +1,6 @@
 package com.revature.auction.controllers;
 
-import com.revature.auction.models.Bid;
+import com.revature.auction.models.*;
 import com.revature.auction.services.BidServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -63,5 +63,17 @@ public class BidController
     {
         bidService.delete(id); // Attempts to delete a bid
         return HttpStatus.OK; // Deletion was called and 200 is returned regardless of success
+    }
+
+    @GetMapping("/user/{bid_id}")
+    public User getUser(@PathVariable int bid_id)
+    {
+        return bidService.getUser(bid_id);
+    }
+
+    @GetMapping("/item/{bid_id}")
+    public Item getItem(@PathVariable int bid_id)
+    {
+        return bidService.getItem(bid_id);
     }
 }
