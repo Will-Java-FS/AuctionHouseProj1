@@ -1,8 +1,17 @@
 import {Card, CardBody, Image, Button} from "@nextui-org/react";
 import { EyeIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import NewProduct from "../new-product/new-product";
+import {Modal, ModalContent, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/react";
+
 
 function Home() {
+
+  const {isOpen, onOpen, onClose} = useDisclosure();
+
+  const handleOpen = () => {
+    onOpen();
+  }
 
   const items = [
     {
@@ -53,9 +62,29 @@ function Home() {
     <>
       <div className="text-center my-10">
         <h1 className="uppercase text-5xl">Auction House</h1>
-        <Button as={Link} to={`/newitem`} className="mt-6" color="secondary">Add New Item <PlusIcon className="w-5 h-5 ml-2" /></Button>
+        <Button className="mt-6" color="secondary" onPress={() => handleOpen()}>Add New Item <PlusIcon className="w-5 h-5 ml-2" /></Button>
       </div>
-
+      {/** This is the modal to add the product */}
+      <Modal 
+        size="4xl"
+        isOpen={isOpen} 
+        onClose={onClose} 
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalBody>
+                <NewProduct />
+              </ModalBody>
+              <ModalFooter className="mb-5 mx-10">
+                <Button color="danger" onPress={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
       <div className="flex flex-col items-center space-y-6 mb-10">
         {items.map((item) => (
           <Card
