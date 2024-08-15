@@ -13,6 +13,7 @@ import java.util.List;
 public interface UserRepo extends JpaRepository< User, Integer> {
 
     User findByUsernameAndPassword(String un, String pw);
+    User findByUsername(String username);
 
 //    @Query("Select Items.* from Users Left Join Items On Users.user_id = Items.user_owner Where Users.user_id = ?1")
 //    List<Item> findItemsByUserId(int id);
