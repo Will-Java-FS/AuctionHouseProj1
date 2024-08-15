@@ -1,7 +1,7 @@
 import '../../../index.css';
 import React from "react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/react";
-import { ThemeSwitcher } from '../../subcomponents/ThemeSwitcher';
+import { ThemeSwitcher } from '../../subcomponents/theme-switcher';
 import {Avatar} from "@nextui-org/react";
 
 function NavBar() {

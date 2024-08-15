@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/home/Home';
-import Account from './pages/account/Account';
-import NotFound from './pages/notfound/NotFound';
-import Login from './pages/login/Login';
-import SingleItem from "./pages/singleitem/SingleItem"
+import Home from './pages/home/home';
+import Account from './pages/account/account';
+import NotFound from './pages/notfound/not-found';
+import Login from './pages/login/login';
+import SingleItem from "./pages/singleitem/single-item"
+import NewItem from "./pages/new-item/new-item"
 
 function AppRouter() {
     return (
@@ -13,6 +14,7 @@ function AppRouter() {
           <Route path="/account" element={<Account />} />
           <Route path="/login" element={<Login />} />
           <Route path="/item/:id" element={<SingleItem />} />
+          <Route path="/newitem" element={<NewItem />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

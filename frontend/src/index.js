@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { NextUIProvider } from "@nextui-org/react";
-import NavBar from './components/design/navbar/NavBar';
+import NavBar from './components/design/navbar/navbar';
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

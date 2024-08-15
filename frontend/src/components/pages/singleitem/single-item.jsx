@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { Image, Button, Textarea, Card, CardBody } from "@nextui-org/react";
+import { TrashIcon } from "@heroicons/react/24/outline";
 
 function SingleItem() {
   const { id } = useParams(); // Get the item ID from the URL
@@ -81,7 +82,7 @@ function SingleItem() {
         <h1 className="uppercase text-5xl">{content.itemName}</h1>
       </div>
 
-      <div style={{ width: '1000px' }} className="flex flex-row justify-center items-start space-x-6">
+      <div className="one-thousand-px flex flex-row justify-center items-start space-x-6">
         <div className="w-1/2">
           <Image
             isZoomed
@@ -112,16 +113,20 @@ function SingleItem() {
           className="w-full my-5"
         />
         <Button className="w-1/4 mb-5" color="primary">Leave a Comment</Button>
-        
-        {comments[content.itemId - 1].map((comment, index) => (
-          <Card key={index} className="mb-3 w-full">
-            <CardBody>
-              <p className="text-lg text-left">
-                {comment}
-              </p>
-            </CardBody>
-          </Card>
-        ))}          
+      </div>
+      <div style={{ width: '1000px' }} >
+      {comments[content.itemId - 1].map((comment, index) => (
+        <Card key={index} className="mb-3 w-full">
+          <CardBody className="flex w-full flex-row items-center justify-between">
+            <span className="justify-left">
+            {comment}
+            </span>
+            <div className="justify-right">
+              <Button color="danger" className="flex items-center">Delete <TrashIcon className="w-5 h-5 ml-2" /></Button>
+            </div>
+          </CardBody>
+        </Card>
+      ))}
       </div>
     </div>
   );
