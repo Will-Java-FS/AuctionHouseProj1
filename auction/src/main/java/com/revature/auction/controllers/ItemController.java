@@ -21,7 +21,7 @@ public class ItemController
         this.itemService = itemService;
     }
 
-    @PostMapping(name="/add", consumes = "application/json",produces ="application/json")
+    @PostMapping()
     public ResponseEntity<Object> addItem(@RequestBody Item it)
     {
         return new ResponseEntity<>(itemService.add(it), HttpStatus.OK);
@@ -39,7 +39,7 @@ public class ItemController
         return itemService.findById(id);
     }
 
-    @PatchMapping(name="/update/{id}", consumes = "application/json",produces ="application/json")
+    @PatchMapping("/{id}")
     public ResponseEntity<Item> updateItem(@RequestBody Item it, @PathVariable int id)
     {
         return new ResponseEntity<>(itemService.update(id, it), HttpStatus.OK);

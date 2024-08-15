@@ -1,8 +1,6 @@
 package com.revature.auction.controllers;
 
-import com.revature.auction.models.AuthRequestDTO;
-import com.revature.auction.models.JwtResponseDTO;
-import com.revature.auction.models.User;
+import com.revature.auction.models.*;
 import com.revature.auction.services.JwtService;
 
 import com.revature.auction.services.UserServiceImp;
