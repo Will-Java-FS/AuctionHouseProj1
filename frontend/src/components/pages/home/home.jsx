@@ -53,7 +53,7 @@ function Home() {
     <>
       <div className="text-center my-10">
         <h1 className="uppercase text-5xl">Auction House</h1>
-        <Button className="mt-6" color="secondary">Add New Item <PlusIcon className="w-5 h-5 ml-2" /></Button>
+        <Button as={Link} to={`/newitem`} className="mt-6" color="secondary">Add New Item <PlusIcon className="w-5 h-5 ml-2" /></Button>
       </div>
 
       <div className="flex flex-col items-center space-y-6 mb-10">
