@@ -22,6 +22,10 @@ public class Comment
     @Setter
     private Timestamp commenttime;
 
+    @Getter
+    @Setter
+    private String content;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_commenter")
     private User user;
