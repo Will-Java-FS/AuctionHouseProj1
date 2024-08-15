@@ -54,21 +54,27 @@ public class ItemController
 
 
     @GetMapping("/user/{item_id}")
-    public User getUser(@PathVariable int item_id)
+    public ResponseEntity<User> getUser(@PathVariable int item_id)
     {
-        return itemService.getUser(item_id);
+        User ans = itemService.getUser(item_id);
+        HttpStatus status = ans != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<User>(ans, status);
     }
 
     @GetMapping("/bids/{item_id}")
-    public List<Bid> getBids(@PathVariable int item_id)
+    public ResponseEntity<List<Bid>> getBids(@PathVariable int item_id)
     {
-        return itemService.getBids(item_id);
+        List<Bid> ans = itemService.getBids(item_id);
+        HttpStatus status = ans != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<List<Bid>>(ans, status);
     }
 
     @GetMapping("/comments/{item_id}")
-    public List<Comment> getComments(@PathVariable int item_id)
+    public ResponseEntity<List<Comment>> getComments(@PathVariable int item_id)
     {
-        return itemService.getComments(item_id);
+        List<Comment> ans = itemService.getComments(item_id);
+        HttpStatus status = ans != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<List<Comment>>(ans, status);
     }
 
 }

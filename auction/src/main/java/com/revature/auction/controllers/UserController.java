@@ -77,38 +77,50 @@ public class UserController
     }
 
     @GetMapping("/{id}")
-    public User findUserById(@PathVariable int id)
+    public ResponseEntity<User> findUserById(@PathVariable int id)
     {
-        return userService.findUser(id);
+        User ans = userService.findUser(id);
+        HttpStatus status = ans != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<User>(ans, status);
     }
 
     @PatchMapping("/{id}")
-    public User updateUser(@PathVariable int id, @RequestBody User user)
+    public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User user)
     {
-        return userService.updateUser(id, user);
+        User ans = userService.updateUser(id, user);
+        HttpStatus status = ans != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<User>(ans, status);
     }
 
     @GetMapping("/admin/{id}")
-    public boolean userIsAdmin(@PathVariable int id) //Lock behind key? Find out later
+    public ResponseEntity<Boolean> userIsAdmin(@PathVariable int id) //Lock behind key? Find out later
     {
-        return userService.findUser(id).isAdmin();
+        User user = userService.findUser(id);
+        HttpStatus status = user != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<Boolean>(user.isAdmin(), status);
     }
 
     @GetMapping("/items/{user_id}")
-    public List<Item> getItems(@PathVariable int user_id)
+    public ResponseEntity<List<Item>> getItems(@PathVariable int user_id)
     {
-        return userService.getItems(user_id);
+        List<Item> ans = userService.getItems(user_id);
+        HttpStatus status = ans != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<List<Item>>(ans, status);
     }
 
     @GetMapping("/bids/{user_id}")
-    public List<Bid> getBids(@PathVariable int user_id)
+    public ResponseEntity<List<Bid>> getBids(@PathVariable int user_id)
     {
-        return userService.getBids(user_id);
+        List<Bid> ans = userService.getBids(user_id);
+        HttpStatus status = ans != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<List<Bid>>(ans, status);
     }
 
     @GetMapping("/comments/{user_id}")
-    public List<Comment> getComments(@PathVariable int user_id)
+    public ResponseEntity<List<Comment>> getComments(@PathVariable int user_id)
     {
-        return userService.getComments(user_id);
+        List<Comment> ans = userService.getComments(user_id);
+        HttpStatus status = ans != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<List<Comment>>(ans, status);
     }
 }

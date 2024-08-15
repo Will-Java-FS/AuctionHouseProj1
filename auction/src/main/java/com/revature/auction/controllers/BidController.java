@@ -66,14 +66,19 @@ public class BidController
     }
 
     @GetMapping("/user/{bid_id}")
-    public User getUser(@PathVariable int bid_id)
+    public ResponseEntity<User> getUser(@PathVariable int bid_id)
     {
-        return bidService.getUser(bid_id);
+        User ans = bidService.getUser(bid_id);
+
+        HttpStatus status = ans != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<User>(ans, status);
     }
 
     @GetMapping("/item/{bid_id}")
-    public Item getItem(@PathVariable int bid_id)
+    public ResponseEntity<Item> getItem(@PathVariable int bid_id)
     {
-        return bidService.getItem(bid_id);
+        Item ans=  bidService.getItem(bid_id);
+        HttpStatus status = ans != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<Item>(ans, status);
     }
 }
