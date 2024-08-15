@@ -1,11 +1,20 @@
 package com.revature.auction.controllers;
 
-import com.revature.auction.models.*;
+import com.revature.auction.models.AuthRequestDTO;
+import com.revature.auction.models.JwtResponseDTO;
+import com.revature.auction.models.User;
+import com.revature.auction.services.JwtService;
+
 import com.revature.auction.services.UserServiceImp;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -16,20 +25,32 @@ public class UserController
     UserServiceImp userService;
 
     @Autowired
+    JwtService jwtService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     public UserController(UserServiceImp userService)
     {
         this.userService = userService;
     }
 
-    @GetMapping()
-    public ResponseEntity<User> findByUsernameAndPassword(@PathParam("username") String username, @PathParam("password") String password)
+    @PostMapping("/login")
+    public ResponseEntity<JwtResponseDTO> AuthenticateAndGetToken(@RequestBody AuthRequestDTO authRequestDTO)
     {
-        User user = userService.login(username, password);
-
-        if(user != null)
-            return new ResponseEntity<>(user, HttpStatus.OK);
-
-        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword()));
+        if(authentication.isAuthenticated())
+        {
+            return new ResponseEntity<>(JwtResponseDTO.builder()
+                    .accessToken(jwtService.GenerateToken(authRequestDTO.getUsername())).build(), HttpStatus.OK);
+        } else
+        {
+            throw new UsernameNotFoundException("invalid user request..!!");
+        }
     }
 
     @DeleteMapping("/{id}")
@@ -39,13 +60,20 @@ public class UserController
         return HttpStatus.OK;
     }
 
-    @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user)
+    @PostMapping("/register")
+    public ResponseEntity<JwtResponseDTO> createUser(@RequestBody User user)
     {
-        if(user != null)
-            return new ResponseEntity<>(userService.createAccount(user), HttpStatus.OK);
+        // Hash the password before saving
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
+        // Save the user to the database
+        User savedUser = userService.createAccount(user);
+
+        // Generate a token for the saved user
+        String token = jwtService.GenerateToken(savedUser.getUsername());
+
+        // Return the token in the response
+        return new ResponseEntity<>(JwtResponseDTO.builder().accessToken(token).build(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
