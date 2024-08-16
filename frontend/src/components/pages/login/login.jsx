@@ -28,7 +28,6 @@ function Login() {
     axios.post(url, {username: username, password: password}, {
       headers: {
         'Content-Type': 'application/json', // Set content type to JSON
-        // Add any other headers if needed, e.g., Authorization
       }
     })
     .then((res) => {
@@ -38,6 +37,26 @@ function Login() {
       navigate('/');
     })
   };
+
+  const register = () => {
+    const url = 'http://localhost:8080/user/register'
+
+    axios.post(url, {
+      username: username,
+      password: password,
+      userImage: "img.img",
+      admin: false
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((res) => {
+      localStorage.setItem('token', JSON.stringify(res.data));
+
+      navigate('/')
+    })
+  }
 
   return (
     <>
@@ -112,7 +131,7 @@ function Login() {
                       </Link>
                     </p>
                     <div className="flex gap-2 justify-end">
-                      <Button type="submit" fullWidth className="button-text" color="primary">
+                      <Button onClick={register} fullWidth className="button-text" color="primary">
                         Sign up
                       </Button>
                     </div>
