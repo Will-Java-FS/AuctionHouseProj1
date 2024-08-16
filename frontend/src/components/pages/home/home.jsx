@@ -110,7 +110,7 @@ if (error) return <p>Error loading items: {error.message}</p>;
                 <div className="flex w-full mb-2 space-x-5 items-center">
                   <Button className="w-1/3" color="success">Place Bid</Button>
                   
-                  <Button as={Link} to={`/item/${item.item.item_d}`} className="w-1/3" color="primary">View Item <EyeIcon className="w-5 h-5 ml-2" /></Button>
+                  <Button as={Link} to={`/item/${item.item.item_id}`} className="w-1/3" color="primary">View Item <EyeIcon className="w-5 h-5 ml-2" /></Button>
                   <p className="w-1/3 text-left">Current Bid: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(item.amount)}</p>
                 </div>
                 <h2 className="text-3xl my-3">{item.item.itemName}</h2>
