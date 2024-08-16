@@ -4,7 +4,6 @@ import Account from './pages/account/account';
 import NotFound from './pages/notfound/not-found';
 import Login from './pages/login/login';
 import SingleItem from "./pages/singleitem/single-item"
-import NewItem from "./pages/new-item/new-item"
 
 function AppRouter() {
     return (
@@ -14,7 +13,6 @@ function AppRouter() {
           <Route path="/account" element={<Account />} />
           <Route path="/login" element={<Login />} />
           <Route path="/item/:id" element={<SingleItem />} />
-          <Route path="/newitem" element={<NewItem />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
