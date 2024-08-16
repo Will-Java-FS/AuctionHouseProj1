@@ -89,6 +89,9 @@ The Auction app is a single-page full stack web application for clients and admi
 - As an ADMIN I can detele comments
 	- Decription: Admin can delete comments that are associated with a specific item
  	- Expected Result: Comments with Id that are associated with Item are deleted
+ 
+## Unit Tests
+- Implemented using https://workik.com/ai-powered-unit-test-case-generator
 
 ## Stretch Goals
 
