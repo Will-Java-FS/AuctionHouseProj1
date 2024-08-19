@@ -10,65 +10,11 @@ function SingleItem() {
   const navigate = useNavigate(); // Hook to navigate programmatically
   const [item, setItem] = useState({});
   const [comments, setComments] = useState([]);
+  const [commentContent, setCommentContent] = useState("");
 
-  // const items = [
-  //   {
-  //     itemId: 1,
-  //     userOwner: "User",
-  //     itemName: "Cool Cat",
-  //     itemDescription:
-  //       "Lorem ipsum odor amet, consectetuer adipiscing elit. Inceptos primis pretium mus adipiscing lacus nascetur volutpat. Litora sollicitudin facilisis hac mi efficitur taciti risus torquent. Duis nascetur class magna mauris phasellus. Nam etiam ante tempor hac blandit ultricies nulla congue quis. Malesuada a lacus fermentum erat eros sodales. Laoreet orci parturient vivamus libero suscipit natoque. Lacus iaculis ultricies inceptos sed ac tempor. Sodales eros sem ante cursus enim eget ex orci. Nunc luctus lobortis sem orci id cursus morbi.",
-  //     itemImage: require("../../../img/items/test/01.jpg"),
-  //     bidAmount: 15,
-  //   },
-  //   {
-  //     itemId: 2,
-  //     userOwner: "User",
-  //     itemName: "Fancy Car",
-  //     itemDescription:
-  //       "Lorem ipsum odor amet, consectetuer adipiscing elit. Inceptos primis pretium mus adipiscing lacus nascetur volutpat. Litora sollicitudin facilisis hac mi efficitur taciti risus torquent. Duis nascetur class magna mauris phasellus. Nam etiam ante tempor hac blandit ultricies nulla congue quis. Malesuada a lacus fermentum erat eros sodales. Laoreet orci parturient vivamus libero suscipit natoque. Lacus iaculis ultricies inceptos sed ac tempor. Sodales eros sem ante cursus enim eget ex orci. Nunc luctus lobortis sem orci id cursus morbi.",
-  //     itemImage: require("../../../img/items/test/02.jpg"),
-  //     bidAmount: 95,
-  //   },
-  //   {
-  //     itemId: 3,
-  //     userOwner: "User",
-  //     itemName: "Poor People's Plane",
-  //     itemDescription:
-  //       "Lorem ipsum odor amet, consectetuer adipiscing elit. Inceptos primis pretium mus adipiscing lacus nascetur volutpat. Litora sollicitudin facilisis hac mi efficitur taciti risus torquent. Duis nascetur class magna mauris phasellus. Nam etiam ante tempor hac blandit ultricies nulla congue quis. Malesuada a lacus fermentum erat eros sodales. Laoreet orci parturient vivamus libero suscipit natoque. Lacus iaculis ultricies inceptos sed ac tempor. Sodales eros sem ante cursus enim eget ex orci. Nunc luctus lobortis sem orci id cursus morbi.",
-  //     itemImage: require("../../../img/items/test/03.jpg"),
-  //     bidAmount: 1120,
-  //   },
-  //   {
-  //     itemId: 4,
-  //     userOwner: "User",
-  //     itemName: "Totally Legal Gun",
-  //     itemDescription:
-  //       "Lorem ipsum odor amet, consectetuer adipiscing elit. Inceptos primis pretium mus adipiscing lacus nascetur volutpat. Litora sollicitudin facilisis hac mi efficitur taciti risus torquent. Duis nascetur class magna mauris phasellus. Nam etiam ante tempor hac blandit ultricies nulla congue quis. Malesuada a lacus fermentum erat eros sodales. Laoreet orci parturient vivamus libero suscipit natoque. Lacus iaculis ultricies inceptos sed ac tempor. Sodales eros sem ante cursus enim eget ex orci. Nunc luctus lobortis sem orci id cursus morbi.",
-  //     itemImage: require("../../../img/items/test/04.jpg"),
-  //     bidAmount: 666,
-  //   },
-  //   {
-  //     itemId: 5,
-  //     userOwner: "User",
-  //     itemName: "Absolutely Illegal Chickens",
-  //     itemDescription:
-  //       "Lorem ipsum odor amet, consectetuer adipiscing elit. Inceptos primis pretium mus adipiscing lacus nascetur volutpat. Litora sollicitudin facilisis hac mi efficitur taciti risus torquent. Duis nascetur class magna mauris phasellus. Nam etiam ante tempor hac blandit ultricies nulla congue quis. Malesuada a lacus fermentum erat eros sodales. Laoreet orci parturient vivamus libero suscipit natoque. Lacus iaculis ultricies inceptos sed ac tempor. Sodales eros sem ante cursus enim eget ex orci. Nunc luctus lobortis sem orci id cursus morbi.",
-  //     itemImage: require("../../../img/items/test/05.jpg"),
-  //     bidAmount: 45263,
-  //   },
-  // ];
-
-  // const comments = [
-  //   ["cool cat!", "i want one of those cats!"],
-  //   ["dope ride!", "i want one of those cars!"],
-  //   ["eww plane!", "i want one of those planes!"],
-  //   ["toy gun!", "i want one of those guns!"],
-  //   ["don't trust the birds!", "constant surveillance!"],
-  // ];
-
-  // // Find the item that matches the ID from the URL
-  // const content = items.find((item) => item.itemId === parseInt(id));
+  const handleCommentChange = (e) => {
+    setCommentContent(e.target.value);
+  }
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -112,6 +58,60 @@ function SingleItem() {
     });
   }, [id]);
 
+  const postComment = () => {
+    if(commentContent !== "")
+    {
+      const storedToken = localStorage.getItem('token');
+    const tokenObject = JSON.parse(storedToken);
+    
+    const decodedToken = jwtDecode(tokenObject.accessToken);
+    const userId = decodedToken.user_Id;
+  
+    const commentData = {
+      comment_id: 20,
+      commenttime: new Date().toISOString(),
+      content: commentContent,
+      user: { user_id: userId },
+      item: { item_id: parseInt(id) }
+    };
+  
+    axios.post('http://localhost:8080/comment', commentData, {
+      headers: {
+        Authorization: `Bearer ${tokenObject.accessToken}`
+      }
+    })
+    .then(response => {
+      console.log("Comment submitted successfully:", response.data);
+      setComments([...comments, response.data]);
+    })
+    .catch(error => {
+      console.error("Error submitting comment:", error);
+    });
+    }
+  };
+
+  const deleteComment = (commentId) =>
+  {
+    const storedToken = localStorage.getItem('token');
+    const tokenObject = JSON.parse(storedToken);
+
+    console.log("Comment ID to Delete: " + commentId);
+
+    axios.delete(`http://localhost:8080/comment/delete/${commentId}`, {
+      headers: {
+        Authorization: `Bearer ${tokenObject.accessToken}`
+      }
+    })
+    .then(() => {
+      console.log("Comment deleted successfully");
+      // Update the comments state by filtering out the deleted comment
+      setComments(comments.filter(comment => comment.comment_id !== commentId));
+    })
+    .catch(error => {
+      console.error("Error deleting comment:", error);
+    });
+  };
+
   if (!item) {
     return null; // Return null to avoid rendering if content is not found
   }
@@ -151,8 +151,10 @@ function SingleItem() {
           label="Comment"
           placeholder="Leave a comment"
           className="w-full my-5"
+          value={commentContent}
+          onChange={handleCommentChange}
         />
-        <Button className="w-1/4 mb-5" color="primary">Leave a Comment</Button>
+        <Button onClick={postComment} className="w-1/4 mb-5" color="primary">Leave a Comment</Button>
       </div>
       <div style={{ width: '1000px' }} >
       {comments.map((comment, index) => (
@@ -166,7 +168,7 @@ function SingleItem() {
             <span className="mt-2">{comment.content}</span>
           </div>
           <div className="justify-right">
-            <Button color="danger" className="flex items-center">
+            <Button color="danger" className="flex items-center" onClick={() => deleteComment(comment.comment_id)}>
               Delete <TrashIcon className="w-5 h-5 ml-2" />
             </Button>
           </div>
