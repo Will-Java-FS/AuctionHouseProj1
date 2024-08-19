@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Image, Button, Textarea, Card, CardBody } from "@nextui-org/react";
 import { TrashIcon } from "@heroicons/react/24/outline";
+import { jwtDecode } from 'jwt-decode'
 import axios from "axios";
 
 function SingleItem() {
@@ -100,6 +101,11 @@ function SingleItem() {
       // Filter comments based on the current item id NOTE: This is not optimal and the backend should have an endpoint for this
     const filteredComments = response.data.filter(comment => comment.item.item_id === parseInt(id));
     setComments(filteredComments);
+
+    //TODO: Below is testing, delete afterwards
+    const decodedToken = jwtDecode(storedToken);
+    const userId = decodedToken.user_Id;
+    console.log("User ID: " + userId);
     })
     .catch(error => {
       console.error("Error fetching comments:", error);
