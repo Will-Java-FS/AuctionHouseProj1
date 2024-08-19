@@ -12,4 +12,5 @@ public interface UserService
     public List<Item> getItems(int uid);
     public List<Bid> getBids(int uid);
     public List<Comment> getComments(int uid);
+    public User getUserByUsername(String username);
 }
