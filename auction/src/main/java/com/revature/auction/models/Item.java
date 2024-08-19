@@ -50,6 +50,19 @@ public class Item {
         this.itemName = itemName;
     }
 
+    public Item(String itemName, String itemDescription, String itemImage) {
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.itemImage = itemImage;
+    }
+
+    public Item(User owner, String itemName, String itemDescription, String itemImage) {
+        this.owner = owner;
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.itemImage = itemImage;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
