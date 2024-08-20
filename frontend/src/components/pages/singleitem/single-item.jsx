@@ -242,7 +242,7 @@ function SingleItem() {
                 </span>
                 <p>{comment.content}</p>
               </div>
-              {currentUserId === comment.user.user_id || currentUserId === item.owner.user_id && (
+              {((currentUserId === comment.user.user_id) || (currentUserId === item.owner.user_id)) && (
                 <Button
                   onClick={() => deleteComment(comment.comment_id)}
                   className="ml-5"
