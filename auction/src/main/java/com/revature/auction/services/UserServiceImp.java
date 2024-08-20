@@ -69,4 +69,9 @@ public class UserServiceImp implements UserService
     {
         return userRepo.findCommentsByUserId(id);
     }
+
+    public User getUserByUsername(String username)
+    {
+        return userRepo.findByUsername(username);
+    }
 }

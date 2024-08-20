@@ -47,7 +47,7 @@ public class UserController
         if(authentication.isAuthenticated())
         {
             return new ResponseEntity<>(JwtResponseDTO.builder()
-                    .accessToken(jwtService.GenerateToken(authRequestDTO.getUsername())).build(), HttpStatus.OK);
+                    .accessToken(jwtService.GenerateToken(authRequestDTO.getUsername(), userService.getUserByUsername(authRequestDTO.getUsername()).getUser_id())).build(), HttpStatus.OK);
         } else
         {
             throw new UsernameNotFoundException("invalid user request..!!");
@@ -71,7 +71,7 @@ public class UserController
         User savedUser = userService.createAccount(user);
 
         // Generate a token for the saved user
-        String token = jwtService.GenerateToken(savedUser.getUsername());
+        String token = jwtService.GenerateToken(savedUser.getUsername(), savedUser.getUser_id());
 
         // Return the token in the response
         return new ResponseEntity<>(JwtResponseDTO.builder().accessToken(token).build(), HttpStatus.OK);
