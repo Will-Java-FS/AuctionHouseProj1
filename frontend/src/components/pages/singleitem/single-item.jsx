@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Image, Button, Textarea, Card, CardBody, Input } from "@nextui-org/react";
+import { Link } from "react-router-dom";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { jwtDecode } from 'jwt-decode';
 import axios from "axios";
@@ -184,8 +185,16 @@ function SingleItem() {
   return (
     <div key={item.item_id} className="flex flex-col items-center">
       <div className="text-center my-10">
-        <h1 className="uppercase text-5xl">{item.itemName}</h1>
+        <h1 className="uppercase text-5xl">{item.itemName}</h1> 
       </div>
+        <Button 
+          as={Link} 
+          to={`/item/update/${item.item_id}`}
+          className="w-1/4 mb-5" 
+          color="primary"
+        >
+          Update Item
+        </Button>
 
       <div className="one-thousand-px flex flex-row justify-center items-start space-x-6">
         <div className="w-1/2">
