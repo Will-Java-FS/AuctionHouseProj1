@@ -54,7 +54,7 @@ function Login() {
     .then((res) => {
       localStorage.setItem('token', JSON.stringify(res.data));
 
-      navigate('/')
+      navigate('/');
     })
   }
 
