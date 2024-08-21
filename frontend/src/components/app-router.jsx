@@ -5,6 +5,7 @@ import NotFound from './pages/notfound/not-found';
 import Login from './pages/login/login';
 import SingleItem from "./pages/singleitem/single-item"
 import UpdateProduct from './update-product/update-product';
+import NewProduct from './pages/new-product/new-product';
 
 function AppRouter() {
     return (
@@ -16,6 +17,7 @@ function AppRouter() {
           <Route path="/item/:id" element={<SingleItem />} />
           <Route path="/item/update/:id" element={<UpdateProduct />} />
           <Route path="*" element={<NotFound />} />
+          <Route path = "/newitem" element = {<NewProduct />} />
         </Routes>
       </Router>
     );
