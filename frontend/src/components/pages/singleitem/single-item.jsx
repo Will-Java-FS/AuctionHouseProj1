@@ -178,6 +178,26 @@ function SingleItem() {
     });
   };
 
+  // Delete item if the current user is the owner
+  const deleteItem = () =>
+  {
+    const storedToken = localStorage.getItem('token');
+    const tokenObject = JSON.parse(storedToken);
+
+    axios.delete(`http://localhost:8080/item/delete/${item.item_id}`, {
+      headers: {
+        Authorization: `Bearer ${tokenObject.accessToken}`
+      }
+    })
+    .then(() => {
+      console.log("Item deleted successfully");
+      navigate("/");
+    })
+    .catch(error => {
+      console.error("Error deleting item:", error);
+    });
+  };
+
   if (!item) {
     return null; // Return null to avoid rendering if content is not found
   }
@@ -188,15 +208,25 @@ function SingleItem() {
         <h1 className="uppercase text-5xl">{item.itemName}</h1> 
       </div>
       {item.owner && currentUserId === item.owner.user_id && (
-  <Button 
-    as={Link} 
-    to={`/item/update/${item.item_id}`}
-    className="w-1/4 mb-5" 
-    color="primary"
-  >
-    Update Item
-  </Button>
-)}
+        <Button 
+          as={Link} 
+          to={`/item/update/${item.item_id}`}
+          className="w-1/4 mb-5" 
+          color="primary"
+        >
+          Update Item
+        </Button>
+      )}
+      {item.owner && currentUserId === item.owner.user_id && (
+        <Button 
+          onClick={deleteItem}
+          className="w-1/4 mb-5" 
+          color="danger"
+        >
+          Delete Item
+          <TrashIcon className="h-5 w-5" />
+        </Button>
+      )}
 
 
       <div className="one-thousand-px flex flex-row justify-center items-start space-x-6">
