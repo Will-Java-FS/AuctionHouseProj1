@@ -16,18 +16,19 @@ function Account() {
   var user = {
     username: FALL_BACK_USER,
     password: FALL_BACK_PASSWORD,
-    userimage: FALL_BACK_IMAGE
+    userimage: FALL_BACK_IMAGE,
+    admin: false
   }
   const [currUser, setCurrUser] = useState(user);
   const navigate = useNavigate();
   
   
-  const fileInputRef = useRef(null);
   useEffect(() =>
   {const storedToken = localStorage.getItem('token');
          const tokenObject = JSON.parse(storedToken);
         const decodedToken = jwtDecode(storedToken);
          const userId = decodedToken.user_Id;
+      console.log(userId);
     axios.get(`http://localhost:8080/user/${userId}`,  {
       headers: {
       Authorization: `Bearer ${tokenObject.accessToken}`
@@ -38,6 +39,7 @@ function Account() {
       if(response.data != null)
       {
          setCurrUser(response.data);
+         console.log(response.data);
          console.log(currUser);
       }
 
@@ -51,8 +53,8 @@ function Account() {
             const decodedToken = jwtDecode(storedToken);
              const userId = decodedToken.user_Id;
     axios.patch(`http://localhost:8080/user/${userId}`, {
-      username: user.username,
-      password: user.password,
+      username: currUser.username,
+      password: currUser.password,
       userImage: imgURL
     }, 
     {
@@ -76,7 +78,7 @@ function Account() {
     axios.patch(`http://localhost:8080/user/${userId}`, {
       username: un,
       password: pw,
-      userImage: user.userimage
+      userImage: currUser.userimage
     }, 
     {
       headers: {
@@ -112,7 +114,7 @@ function Account() {
 
         <div className="flex flex-col items-center w-full max-w-md">
           <h2 className="text-4xl font-semibold mb-10">
-            Hello, {user.username}
+            Hello, {currUser.username}
           </h2>
           <Input id="un"size="lg" type="text" label="Username" placeholder="Enter your username" className="mb-5 w-full" />
           <Input id="pw"size="lg" type="password" label="Password" placeholder="Enter your password" className="mb-5 w-full" />
@@ -122,9 +124,10 @@ function Account() {
           </Button>
         </div>
       </div>
-
+      <div hidden={!currUser.admin} id="panel">
       {/* Render dynamically if the user is admin */}
-      <AdminPanel />
+        <AdminPanel />
+      </div>
     </div>
   );
 }
