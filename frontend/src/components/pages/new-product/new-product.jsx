@@ -1,6 +1,7 @@
 import { Input, Textarea, Button } from "@nextui-org/react";
 import { useRef, useState } from "react";
 import { FireIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { jwtDecode } from 'jwt-decode'
@@ -11,6 +12,7 @@ function NewProduct() {
     //const [height, setHeight] = useState(0);
     const [item, setItem] = useState(null);
     const fileInputRef = useRef(null);
+    const navigate = useNavigate();
 
     /*const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -66,6 +68,7 @@ function NewProduct() {
           })
           .then(response => {
             setItem(response.data);
+            navigate("/");
           })
     }
 
@@ -83,7 +86,7 @@ function NewProduct() {
                             style={{ height: "250px" }} // Inline style to set height
                         />
                         <div className="flex items-center justify-center w-full">
-                            <Input id="imageURL" type="text" label="Item Name" placeholder="Enter item name" />
+                            <Input id="imageURL" type="text" label="Item Image" placeholder="Enter item image" />
                         </div>
                         <Button size="lg" color="success" className="w-full" onClick={upload}>
                             Upload item
