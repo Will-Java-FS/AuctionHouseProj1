@@ -3,6 +3,8 @@ import { useRef, useState } from "react";
 import { FireIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 
+import { jwtDecode } from 'jwt-decode'
+
 function NewProduct() {
     const [imgLink, setImgLink] = useState('');
     //const [width, setWidth] = useState(0);
@@ -45,9 +47,14 @@ function NewProduct() {
         const itemdsc = document.getElementById("descr").value;
         const itemImg = imgLink;
         const storedToken = localStorage.getItem('token');
-  const tokenObject = JSON.parse(storedToken);
+         const tokenObject = JSON.parse(storedToken);
+        const decodedToken = jwtDecode(storedToken);
+         const userId = decodedToken.user_Id;
 
         axios.post("http://localhost:8080/item", {
+            owner: {
+                user_id: userId 
+            },
             itemName: itemnam,
             itemDescription: itemdsc,
             itemImage: itemImg
