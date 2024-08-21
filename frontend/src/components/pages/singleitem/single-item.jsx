@@ -187,14 +187,17 @@ function SingleItem() {
       <div className="text-center my-10">
         <h1 className="uppercase text-5xl">{item.itemName}</h1> 
       </div>
-        <Button 
-          as={Link} 
-          to={`/item/update/${item.item_id}`}
-          className="w-1/4 mb-5" 
-          color="primary"
-        >
-          Update Item
-        </Button>
+      {item.owner && currentUserId === item.owner.user_id && (
+  <Button 
+    as={Link} 
+    to={`/item/update/${item.item_id}`}
+    className="w-1/4 mb-5" 
+    color="primary"
+  >
+    Update Item
+  </Button>
+)}
+
 
       <div className="one-thousand-px flex flex-row justify-center items-start space-x-6">
         <div className="w-1/2">
