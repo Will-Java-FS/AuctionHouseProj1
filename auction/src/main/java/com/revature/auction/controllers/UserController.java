@@ -54,6 +54,12 @@ public class UserController
         }
     }
 
+    @GetMapping
+    public List<User> getAllUsers()
+    {
+        return userService.getAllUsers();
+    }
+
     @DeleteMapping("/{id}")
     public HttpStatus deleteUserById(@PathVariable("id") int id)
     {

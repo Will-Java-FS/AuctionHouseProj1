@@ -29,6 +29,12 @@ public class UserServiceImp implements UserService
     }
 
     @Override
+    public List<User> getAllUsers()
+    {
+        return userRepo.findAll();
+    }
+
+    @Override
     public User createAccount(User user)
     {
         return userRepo.save(user);

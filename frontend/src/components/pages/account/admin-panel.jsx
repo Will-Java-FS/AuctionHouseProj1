@@ -2,95 +2,223 @@ import { Button } from "@nextui-org/react";
 import { EyeIcon, UsersIcon, TrashIcon, ShoppingBagIcon, BoltSlashIcon, BoltIcon } from "@heroicons/react/24/outline";
 import { Tabs, Tab, Card, CardBody } from "@nextui-org/react";
 import { Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { jwtDecode } from 'jwt-decode';
+import { UserPlusIcon } from "@heroicons/react/16/solid";
 
 function AdminPanel() {
 
-    // Dummy content
-    const users = [
-        {
-            userId: 1,
-            username: 'turtle',
-            isadmin: false
-        },
-        {
-            userId: 2,
-            username: 'woodpecker',
-            isadmin: false
-        },
-        {
-            userId: 3,
-            username: 'capybara',
-            isadmin: false
-        },
-        {
-            userId: 4,
-            username: 'elephant',
-            isadmin: true
-        },
-        {
-            userId: 5,
-            username: 'seagull',
-            isadmin: false
-        },
-        {
-            userId: 6,
-            username: 'cobra',
-            isadmin: false
-        },
-        {
-            userId: 7,
-            username: 'squirrel',
-            isadmin: false
-        },
-        {
-            userId: 8,
-            username: 'llama',
-            isadmin: true
-        },
-        {
-            userId: 9,
-            username: 'lion',
-            isadmin: false
-        },
-        {
-            userId: 10,
-            username: 'coala',
-            isadmin: false
-        },
-        {
-            userId: 1,
-            username: 'panda',
-            isadmin: false
-        }
-    ];
+    const navigate = useNavigate(); // Hook to navigate programmatically
+    const [users, setUsers] = useState([]);
+    const [items,setItems] = useState([]);
 
-    const items = [
-        {
-            itemId: 1,
-            itemName: 'Cool Cat',
-            itemIsApproved: true,
-        },
-        {
-            itemId: 2,
-            itemName: 'Fancy Car',
-            itemIsApproved: true,
-        },
-        {
-            itemId: 3,
-            itemName: "Poor People's Plane",
-            itemIsApproved: true,
-        },
-        {
-            itemId: 4,
-            itemName: 'Totally Legal Gun',
-            itemIsApproved: true,
-        },
-        {
-            itemId: 5,
-            itemName: 'Absolutely Illegal Chickens',
-            itemIsApproved: false,
+    useEffect(() => {
+
+        const storedToken = localStorage.getItem('token');
+        const tokenObject = JSON.parse(storedToken);
+    
+        axios.get(`http://localhost:8080/user`, {
+          headers: {
+            Authorization: `Bearer ${tokenObject.accessToken}`
+          }
+        })
+        .then(response => {
+          setUsers(response.data);
+        })
+        .catch(error => {
+            console.error("Error fetching users:", error);//navigate("/404"); // Navigate to the NotFound page
+        });
+      }, [users,navigate]);
+
+
+
+      useEffect(() => {
+        const storedToken = localStorage.getItem('token');
+        const tokenObject = JSON.parse(storedToken);
+    
+        axios.get(`http://localhost:8080/item`, {
+          headers: {
+            Authorization: `Bearer ${tokenObject.accessToken}`
+          }
+        })
+        .then(response => {
+          setItems(response.data);
+        })
+    
+        .catch(error => {
+            console.error("Error fetching users:", error); // Navigate to the NotFound page
+        });
+      }, [items]);
+
+
+
+      const toggleAdminStatus = async (userId) => {
+
+        const storedToken = localStorage.getItem('token');
+        const tokenObject = JSON.parse(storedToken);
+
+        try {
+            // Fetch the current user data to get the current isadmin status
+            const response = await axios.get(`http://localhost:8080/user/${userId}`,{
+                headers: {
+                Authorization: `Bearer ${tokenObject.accessToken}`
+                  
+                }});
+            const user = response.data;
+    
+            if (user) {
+                // Toggle the isadmin property
+                const updatedUser = {
+                    ...user,
+                    admin: !user.admin
+                };
+    
+                // Send a PATCH request to update the user
+                const patchResponse = await axios.patch(`http://localhost:8080/user/${userId}`, updatedUser,{
+                    headers: {
+                    Authorization: `Bearer ${tokenObject.accessToken}`
+                      
+                    }});
+    
+                if (patchResponse.status === 200) {
+                    const updatedUserData = patchResponse.data;
+                    console.log('User updated successfully:', updatedUserData);
+                    // Optionally, update the local state with the new user data
+                    setUsers(prevUsers => 
+                        prevUsers.map(u => (u.userId === userId ? updatedUserData : u))
+                    );
+                } else {
+                    console.error('Failed to update user:', patchResponse.statusText);
+                }
+            }
+        } catch (error) {
+            console.error('Error toggling admin status:', error);
         }
-    ];
+        
+    };
+
+    const toggleItemApproval = async (itemId) => {
+
+        const storedToken = localStorage.getItem('token');
+        const tokenObject = JSON.parse(storedToken);
+
+        try {
+            // Fetch the current user data to get the current isadmin status
+            const response = await axios.get(`http://localhost:8080/item/${itemId}`,{
+                headers: {
+                Authorization: `Bearer ${tokenObject.accessToken}`
+                  
+                }});
+            const item = response.data;
+    
+            if (item) {
+                // Toggle the isadmin property
+                const updatedItem = {
+                    ...item,
+                    approved: !item.approved
+                };
+    
+                // Send a PATCH request to update the user
+                const patchResponse = await axios.patch(`http://localhost:8080/item/${itemId}`, updatedItem,{
+                    headers: {
+                    Authorization: `Bearer ${tokenObject.accessToken}`
+                      
+                    }});
+    
+                if (patchResponse.status === 200) {
+                    const updatedItemData = patchResponse.data;
+                    console.log('User updated successfully:', updatedItemData);
+                    // Optionally, update the local state with the new user data
+                    setUsers(prevItem => 
+                        prevItem.map(i => (i.itemId === itemId ? updatedItemData : i))
+                    );
+                } else {
+                    console.error('Failed to update item:', patchResponse.statusText);
+                }
+            }
+        } catch (error) {
+            console.error('Error toggling item status:', error);
+        }
+        
+    };
+
+    const deleteUser = async (userId) => {
+
+        const storedToken = localStorage.getItem('token');
+        const tokenObject = JSON.parse(storedToken);
+
+        try {
+            // Fetch the current user data to get the current isadmin status
+            const response = await axios.get(`http://localhost:8080/user/${userId}`,{
+                headers: {
+                Authorization: `Bearer ${tokenObject.accessToken}`
+                  
+                }});
+            const user = response.data;
+    
+            if (user) {
+               
+                // Send a DELETE request to update the user
+                const patchResponse = await axios.delete(`http://localhost:8080/user/${userId}`,{
+                    headers: {
+                    Authorization: `Bearer ${tokenObject.accessToken}`
+                      
+                    }});
+    
+                if (patchResponse.status === 200) {
+                   
+                    console.log('User deleted successfully:');
+                    // Optionally, update the local state with the new user data
+                    
+                } else {
+                    console.error('Failed to update user:', patchResponse.statusText);
+                }
+            }
+        } catch (error) {
+            console.error('Error deleting user', error);
+        }
+        
+    };
+
+    const deleteItem = async (itemId) => {
+
+        const storedToken = localStorage.getItem('token');
+        const tokenObject = JSON.parse(storedToken);
+
+        try {
+          
+            const response = await axios.get(`http://localhost:8080/item/${itemId}`,{
+                headers: {
+                Authorization: `Bearer ${tokenObject.accessToken}`
+                  
+                }});
+            const item = response.data;
+    
+            if (item) {
+               
+                // Send a DELETE request to update the user
+                const patchResponse = await axios.delete(`http://localhost:8080/item/delete/${itemId}`,{
+                    headers: {
+                    Authorization: `Bearer ${tokenObject.accessToken}`
+                      
+                    }});
+    
+                if (patchResponse.status === 200) {
+                   
+                    console.log('Item deleted successfully:');
+                    // Optionally, update the local state with the new user data
+                    
+                } else {
+                    console.error('Failed to update item:', patchResponse.statusText);
+                }
+            }
+        } catch (error) {
+            console.error('Error deleting item', error);
+        }
+        
+    };
 
     return (
         <div className="one-thousand-px flex flex-col items-center m-10">
@@ -110,16 +238,17 @@ function AdminPanel() {
                             <CardBody>
                                 <ul className="mt-2">
                                     {users.map((user, index) => (
-                                        <li key={user.userId} className="mb-2">
+                                        <li key={user.user_id} className="mb-2">
                                             <div className="flex justify-between items-center">
                                                 <span>{user.username}</span>
                                                 <div className="flex space-x-2">
                                                     <Button
-                                                        color={user.isadmin ? "warning" : "success"}
+                                                        color={user.admin ? "warning" : "success"}
                                                         className="w-36 flex justify-between items-center"
+                                                        onClick={() => toggleAdminStatus(user.user_id)} // Attach the click handler
                                                     >
                                                         <span className="flex-grow text-left">
-                                                            {user.isadmin ? "Make User" : "Make Admin"}
+                                                            {user.admin ? "Make Admin" : "Make User"}
                                                         </span>
                                                         {user.isadmin ? (
                                                             <BoltSlashIcon className="w-5 h-5 ml-2" />
@@ -127,10 +256,12 @@ function AdminPanel() {
                                                             <BoltIcon className="w-5 h-5 ml-2" />
                                                         )}
                                                     </Button>
-                                                    <Button color="danger">
+
+                                                    <Button color="danger" onClick={() => deleteUser(user.user_id)}>
                                                         Delete
                                                         <TrashIcon className="w-5 h-5 ml-2" />
                                                     </Button>
+
                                                 </div>
                                             </div>
                                             {index < users.length - 1 && <hr className="my-2 border-t border-gray-200" />}
@@ -139,6 +270,8 @@ function AdminPanel() {
                                 </ul>
                             </CardBody>
                         </Card>
+
+
                     </Tab>
                     <Tab
                         key="items"
@@ -153,18 +286,19 @@ function AdminPanel() {
                             <CardBody>
                                 <ul className="mt-2">
                                     {items.map((item, index) => (
-                                        <li key={item.itemId} className="mb-2">
+                                        <li key={item.item_id} className="mb-2">
                                             <div className="flex justify-between items-center">
                                                 <span>{item.itemName}</span>
                                                 <div className="flex space-x-2">
                                                     <Button
-                                                        color={item.itemIsApproved ? "warning" : "success"}
+                                                        color={item.approved ? "warning" : "success"}
                                                         className="w-36 flex justify-between items-center"
+                                                        onClick={() => toggleItemApproval(item.item_id)}
                                                     >
                                                         <span className="flex-grow text-left">
-                                                            {item.itemIsApproved ? "Disapprove" : "Approve"}
+                                                            {item.approved ? "Disapprove" : "Approve"}
                                                         </span>
-                                                        {item.itemIsApproved ? (
+                                                        {item.approved ? (
                                                             <BoltSlashIcon className="w-5 h-5 ml-2" />
                                                         ) : (
                                                             <BoltIcon className="w-5 h-5 ml-2" />
@@ -174,7 +308,7 @@ function AdminPanel() {
                                                         View Item
                                                         <EyeIcon className="w-5 h-5 ml-2" />
                                                     </Button>
-                                                    <Button color="danger">
+                                                    <Button color="danger" onClick={() => deleteItem(item.item_id)}>
                                                         Delete
                                                         <TrashIcon className="w-5 h-5 ml-2" />
                                                     </Button>

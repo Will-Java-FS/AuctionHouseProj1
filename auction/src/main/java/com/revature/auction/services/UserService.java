@@ -13,4 +13,5 @@ public interface UserService
     public List<Bid> getBids(int uid);
     public List<Comment> getComments(int uid);
     public User getUserByUsername(String username);
+    public List<User> getAllUsers();
 }
