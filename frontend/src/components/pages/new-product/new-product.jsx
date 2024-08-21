@@ -1,10 +1,13 @@
 import { Input, Textarea, Button } from "@nextui-org/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { FireIcon } from "@heroicons/react/24/outline";
-
+import axios from "axios";
 
 function NewProduct() {
-
+    const [imgLink, setImgLink] = useState('');
+    //const [width, setWidth] = useState(0);
+    //const [height, setHeight] = useState(0);
+    const [item, setItem] = useState(null);
     const fileInputRef = useRef(null);
 
     const handleFileChange = (event) => {
@@ -19,6 +22,11 @@ function NewProduct() {
                     alert('Image dimensions should not exceed 1200px x 1200px.');
                     fileInputRef.current.value = ''; // Clear the input
                 }
+                else
+                {
+                    setImgLink(objectUrl);
+                    //setHeight(img.height); setWidth(img.width);
+                }
                 URL.revokeObjectURL(objectUrl); // Clean up the object URL
             };
 
@@ -32,14 +40,37 @@ function NewProduct() {
         }
     };
 
+    const upload = () => {
+        const itemnam = document.getElementById("name").value;
+        const itemdsc = document.getElementById("descr").value;
+        const itemImg = imgLink;
+        const storedToken = localStorage.getItem('token');
+  const tokenObject = JSON.parse(storedToken);
+
+        axios.post("http://localhost:8080/item", {
+            itemName: itemnam,
+            itemDescription: itemdsc,
+            itemImage: itemImg
+          }, {
+            headers: {
+            Authorization: `Bearer ${tokenObject.accessToken}`
+              
+            }
+          })
+          .then(response => {
+            setItem(response.data);
+          })
+    }
+
     return (
         <div className="w-full flex justify-center">
             <div className="w-full backdrop:flex flex-col items-center m-10">
                 <h2 className="text-3xl font-semibold mb-5">Add an Item</h2>
                 <div className="w-full flex flex-col gap-4">
                     <div className="flex w-full flex-col md:flex-nowrap mb-6 md:mb-0 gap-4">
-                        <Input type="text" label="Item Name" placeholder="Enter item name" />
+                        <Input id="name" type="text" label="Item Name" placeholder="Enter item name" />
                         <Textarea
+                            id = "descr"
                             label="Description"
                             placeholder="Enter your description"
                             style={{ height: "250px" }} // Inline style to set height
@@ -61,10 +92,11 @@ function NewProduct() {
                                     ref={fileInputRef}
                                     onChange={handleFileChange}
                                 />
+                                <img src={imgLink} id="display" alt="Shown" height='1200' width='1200'/>
                             </label>
                         </div>
-                        <Button size="lg" color="success" className="w-full">
-                            Change Image
+                        <Button size="lg" color="success" className="w-full" onClick={upload}>
+                            Upload item
                             <FireIcon className="w-5 h-5 ml-2" />
                         </Button>
                     </div>
