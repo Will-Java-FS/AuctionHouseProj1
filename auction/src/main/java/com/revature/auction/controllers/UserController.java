@@ -92,11 +92,14 @@ public class UserController
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User user)
+    public ResponseEntity<JwtResponseDTO> updateUser(@PathVariable int id, @RequestBody User user)
     {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User ans = userService.updateUser(id, user);
+
         HttpStatus status = ans != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
-        return new ResponseEntity<User>(ans, status);
+        String token = jwtService.GenerateToken(ans.getUsername(), ans.getUser_id());
+        return new ResponseEntity<>(JwtResponseDTO.builder().accessToken(token).build(), status);
     }
 
     @GetMapping("/admin/{id}")

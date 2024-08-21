@@ -48,7 +48,8 @@ public class ItemServiceImp implements ItemService, CrudService<Item>
     @Override
     public Item add(Item object)
     {
-        return itemRepo.save(object);
+        List<Item> test = itemRepo.findByItemName(object.getItemName());
+        return test.size() == 0 ? itemRepo.save(object) : null;
     }
 
     @Override
