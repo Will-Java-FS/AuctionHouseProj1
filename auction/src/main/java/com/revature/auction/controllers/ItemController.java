@@ -24,7 +24,7 @@ public class ItemController
     @PostMapping()
     public ResponseEntity<Object> addItem(@RequestBody Item it)
     {
-        return new ResponseEntity<>(itemService.add(it), HttpStatus.OK);
+        return new ResponseEntity<>(itemService.add(it), it != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping
