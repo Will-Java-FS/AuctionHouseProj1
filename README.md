@@ -7,6 +7,22 @@ Emmett, Daniel, Ryan, Alex
 Auction Management App
 The Auction app is a single-page full stack web application for clients and admins. In addition to registering and signing in, Users can list items for auction, bid on auctions and leave comments on auctioned items. Admins can approve items for auction or manage user accounts. They can also adjust the active status and remaining time on any said auctions.
 
+## Project Setup:
+Pull project
+
+Installing React (vavigate to /frontend)
+- npm install (may also need to run init)
+
+Installing other Node Modules:
+- NextUI: npx nextui-cli@latest init
+- Axios: npm i axios
+- jwt-decode: npm i jwt-decode
+
+Running the application:
+- Start the Spring Boot application
+- navigate to /frontend
+  - npm start
+
 ## Technologies Used
 
 - **Spring Boot 3.3.2**
