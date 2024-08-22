@@ -243,12 +243,12 @@ function AdminPanel() {
                                                 <span>{user.username}</span>
                                                 <div className="flex space-x-2">
                                                     <Button
-                                                        color={user.admin ? "warning" : "success"}
+                                                        color={user.admin ? "success" : "warning"}
                                                         className="w-36 flex justify-between items-center"
                                                         onClick={() => toggleAdminStatus(user.user_id)} // Attach the click handler
                                                     >
                                                         <span className="flex-grow text-left">
-                                                            {user.admin ? "Make Admin" : "Make User"}
+                                                            {user.admin ? "Make User" : "Make Admin"}
                                                         </span>
                                                         {user.isadmin ? (
                                                             <BoltSlashIcon className="w-5 h-5 ml-2" />
