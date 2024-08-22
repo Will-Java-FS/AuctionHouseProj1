@@ -9,25 +9,33 @@ function NavBar() {
     const SITE_NAME = process.env.REACT_APP_SITE_NAME;
     const FALL_BACK_IMAGE = process.env.REACT_APP_FALL_BACK_IMAGE;
     const [img,setImg] = useState(FALL_BACK_IMAGE);
-    useEffect(() =>
-        {const storedToken = localStorage.getItem('token');
-               const tokenObject = JSON.parse(storedToken);
-              const decodedToken = jwtDecode(storedToken);
-               const userId = decodedToken.user_Id;
-          axios.get(`http://localhost:8080/user/${userId}`,  {
+    useEffect(() => {
+        const storedToken = localStorage.getItem('token');
+
+        // If no token is found, don't proceed with the API call
+        if (!storedToken) return;
+
+        const tokenObject = JSON.parse(storedToken);
+        const decodedToken = jwtDecode(storedToken);
+        const userId = decodedToken.user_Id;
+
+        axios.get(`http://localhost:8080/user/${userId}`, {
             headers: {
-            Authorization: `Bearer ${tokenObject.accessToken}`
-              
+                Authorization: `Bearer ${tokenObject.accessToken}`
             }
-          })
-          .then(response => {
-            if(response.data != null)
-            {
-               setImg(response.data.userImage);
+        })
+        .then(response => {
+            if (response.data != null) {
+                setImg(response.data.userImage);
             }
-      
-          })}, []
-        )
+        });
+    }, []);
+
+    // If no token is found, return null and render nothing
+    const storedToken = localStorage.getItem('token');
+    if (!storedToken) {
+        return null;
+    }
     return (
             <Navbar maxWidth="2xl" className="w-full flex content-center px-4">
                 {/* Navbar Brand */}

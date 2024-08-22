@@ -8,7 +8,7 @@ public interface UserService
     public void deleteAccount(int id);
     public User createAccount(User user);
     public User findUser(int id);
-    public User updateUser(int id, User user);
+    public User updateUser(int id, boolean isAdmin);
     public List<Item> getItems(int uid);
     public List<Bid> getBids(int uid);
     public List<Comment> getComments(int uid);

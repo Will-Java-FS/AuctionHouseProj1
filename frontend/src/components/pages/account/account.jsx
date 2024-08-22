@@ -55,7 +55,8 @@ function Account() {
     axios.patch(`http://localhost:8080/user/${userId}`, {
       username: currUser.username,
       password: currUser.password,
-      userImage: imgURL
+      userImage: imgURL,
+      admin: currUser.admin
     }, 
     {
       headers: {
@@ -78,7 +79,8 @@ function Account() {
     axios.patch(`http://localhost:8080/user/${userId}`, {
       username: un,
       password: pw,
-      userImage: currUser.userimage
+      userImage: currUser.userimage,
+      admin: currUser.admin
     }, 
     {
       headers: {

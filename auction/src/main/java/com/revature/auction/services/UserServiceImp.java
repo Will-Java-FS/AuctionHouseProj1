@@ -47,7 +47,7 @@ public class UserServiceImp implements UserService
     }
 
     @Override
-    public User updateUser(int id, User user)
+    public User updateUser(int id, boolean isAdmin)
     {
         // Validating object exists
         User objectExists = userRepo.findById(id).orElse(null);
@@ -55,8 +55,8 @@ public class UserServiceImp implements UserService
         if(objectExists != null)
         {
             // Saving the updates
-            user.setUser_id(objectExists.getUser_id());
-            return userRepo.save(user);
+            userRepo.updateAdmin(id, isAdmin);
+            return userRepo.findById(id).orElse(null);
         }
 
         return null; // Nothing was found so return null
