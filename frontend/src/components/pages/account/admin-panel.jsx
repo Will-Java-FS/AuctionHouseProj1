@@ -304,7 +304,7 @@ function AdminPanel() {
                                                             <BoltIcon className="w-5 h-5 ml-2" />
                                                         )}
                                                     </Button>
-                                                    <Button as={Link} to={`/item/${item.itemId}`} color="primary">
+                                                    <Button as={Link} to={`/item/${item.item_id}`} color="primary">
                                                         View Item
                                                         <EyeIcon className="w-5 h-5 ml-2" />
                                                     </Button>
