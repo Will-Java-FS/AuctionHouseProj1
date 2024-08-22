@@ -76,7 +76,7 @@ function AdminPanel() {
                 };
     
                 // Send a PATCH request to update the user
-                const patchResponse = await axios.patch(`http://localhost:8080/user/${userId}`, updatedUser,{
+                const patchResponse = await axios.patch(`http://localhost:8080/user/${userId}/${!user.admin}`, updatedUser,{
                     headers: {
                     Authorization: `Bearer ${tokenObject.accessToken}`
                       

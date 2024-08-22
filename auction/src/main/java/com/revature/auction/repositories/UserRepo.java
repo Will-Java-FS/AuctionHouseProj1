@@ -2,8 +2,11 @@ package com.revature.auction.repositories;
 
 import com.revature.auction.models.*;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,6 +26,12 @@ public interface UserRepo extends JpaRepository< User, Integer> {
 
     @Query(value = "Select Comments.* from Users Left Join Comments On Users.user_id = Comments.user_commenter Where Users.user_id = ?1", nativeQuery = true)
     List<Comment> findCommentsByUserId(int id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE users SET isadmin = :isAdmin WHERE user_id = :id", nativeQuery = true)
+    int updateAdmin(@Param("id") int id, @Param("isAdmin") boolean isAdmin);
+
 }
 
 
