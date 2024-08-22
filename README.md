@@ -10,7 +10,7 @@ The Auction app is a single-page full stack web application for clients and admi
 ## Project Setup:
 Pull project
 
-Installing React (vavigate to /frontend)
+Installing React (vavigate to /frontend):
 - npm install (may also need to run init)
 
 Installing other Node Modules:
