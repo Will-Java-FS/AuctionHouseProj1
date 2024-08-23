@@ -7,6 +7,9 @@ Emmett, Daniel, Ryan, Alex
 Auction Management App
 The Auction app is a single-page full stack web application for clients and admins. In addition to registering and signing in, Users can list items for auction, bid on auctions and leave comments on auctioned items. Admins can approve items for auction or manage user accounts. They can also adjust the active status and remaining time on any said auctions.
 
+## Presentation
+https://docs.google.com/presentation/d/1dYMJcD6gN-7GZ8hDmUYAayZvDobRL2imSXe10g87cjA/edit?usp=sharing
+
 ## Project Setup:
 Pull project
 
